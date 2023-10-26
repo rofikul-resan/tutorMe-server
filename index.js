@@ -34,13 +34,11 @@ runDb().catch((err) => console.log("error from log", err));
 
 app.use("/user", userRoute);
 
-const errorHandler = (err, req, res, next) => {
-  if (err) {
-    next(err.massage);
-  }
-};
-
-app.use(errorHandler);
+// error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Something went wrong" });
+});
 // port listen
 app.listen(port, () => {
   console.log("server run in port", port);
