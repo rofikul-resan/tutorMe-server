@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  username: {
+  name: {
     type: String,
     required: true,
   },
@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["student", "instructor", "admin"],
-    default: "student", // Default to 'student' if no role is specified
+    default: "student",
   },
   following: {
     type: [
@@ -53,7 +53,6 @@ const UserSchema = new mongoose.Schema({
       {
         notificationFor: {
           type: String,
-          // This references the User model for instructors
         },
         updateMessage: String,
         time: {
@@ -62,8 +61,10 @@ const UserSchema = new mongoose.Schema({
         },
       },
     ],
-    default: [], // Default to an empty array
+    default: [],
   },
 });
 
-module.exports = UserSchema;
+const User = mongoose.model("User", UserSchema);
+
+module.exports = User;
