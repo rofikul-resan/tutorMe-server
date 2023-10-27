@@ -5,10 +5,13 @@ const app = express();
 require("dotenv").config();
 const mongoose = require("mongoose");
 const userRoute = require("./router/userRoute");
+const router = require("express").Router();
+const serverLess = require("serverless-http");
 
 //middleware
 app.use(cors());
 app.use(express.json());
+app.use("/", router);
 
 app.get("/", (req, res) => {
   res.send("TutorMe server is running ");
@@ -43,3 +46,5 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log("server run in port", port);
 });
+const handler = serverless(app);
+module.exports = handler;
